@@ -59,12 +59,12 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Structure the basic layout of the webpage and game including the main gameboard, buttons, and score displays
+- **CSS** - Application styling such as colors and shape of number tiles, board layout, animations for tile movement and merging, and other styling for compatability with different devices.
+- **React** - Interactive user interface. Handle the game state, manage tile movements and merges, update scores, and start new game.
+- **Service** - Implement games core logic such as moving tiles, merging tiles, checking game over conditions, and calculating scores, getting images from another api.
+- **DB/Login** - Save data of user logins and highscores in database.
+- **WebSocket** - Highscores are saved for everyone to see, live leaderboard.
 
 ## 🚀 AWS deliverable
 
