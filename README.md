@@ -22,26 +22,38 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Do you think you could get your highest number to 3072? Challenge yourself with this fun, simple game of strategy and addition!
+
+If there are times in your day where you need a break from school, are bored, or stressed, you may think to yourself, "What could I do to fill this time?" 3072 is the perfect game that keeps your brain awake while allowing you to take a break from what you're doing or simply entertain the mind when you're bored. Play whenever and as long as you like. Give it a try!
 
 ### Design
 
-![Design image](placeholder.png)
+![Design image](3072startup.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Here is a sequence Diagram showing how users interact with the application to move pieces and increment tiles.
 
 ```mermaid
 sequenceDiagram
     actor You
-    actor Website
-    You->>Website: Replace this with your design
+    actor App
+    actor Otherplayer
+    You ->> App: Move
+    App -->> You: Update tiles and score
+    You ->> App: Bad move
+    App -->> You: End game, update highscore if necessary
+    App -->> You: Update highscores
+    App -->> Otherplayer: Update highscores
+
 ```
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Secure login over HTTPS
+- Highscore displayed and saved for each time you play
+- Total score displayed in realtime
+- Display of board and numbers
+- Automatic addition of variables when combined
+- Display of numbers sliding to different positions
 
 ### Technologies
 
