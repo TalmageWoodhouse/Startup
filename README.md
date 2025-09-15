@@ -28,7 +28,7 @@ If there are times in your day where you need a break from school, are bored, or
 
 ### Design
 
-![Design image](Habit tracker.png)
+![Design image](Habittracker.png)
 
 Here is a sequence Diagram showing how users interact with the application to move pieces and increment tiles.
 
