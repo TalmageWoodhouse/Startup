@@ -1,4 +1,4 @@
-# 3072
+# MyHabits
 
 [My Notes](notes.md)
 
@@ -28,7 +28,7 @@ If there are times in your day where you need a break from school, are bored, or
 
 ### Design
 
-![Design image](3072startup.png)
+![Design image](Habit tracker.png)
 
 Here is a sequence Diagram showing how users interact with the application to move pieces and increment tiles.
 
