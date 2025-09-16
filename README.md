@@ -2,7 +2,7 @@
 
 [My Notes](notes.md)
 
-3072 is game that is played on a 4x4 grid. This game is played by using the arrow keys to slide the numbers in the direction of your choice. When an arrow it pressed the numbers slide as far to that direction as possible. Each time you slide a number a new number consisting of 3 or 6 will appear. If 2 of the same numbers slide into each other they will combine. The object of the game is to get the highest score possible and the game is over when the board is full and it is not possible to slide anymore.
+MyHabits is an app that most efficiently and easily tracks your daily habits. This list of daily habits can be as long or short as you want. You may also be able to see your streak for each habit to see how well you are doing. This app also allows you to go back and check previous days to check which habits you accomplished on that specific day.
 
 > [!NOTE]
 > This is a note I want to keep here to add notes in the future.
@@ -22,9 +22,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Do you think you could get your highest number to 3072? Challenge yourself with this fun, simple game of strategy and addition!
-
-If there are times in your day where you need a break from school, are bored, or stressed, you may think to yourself, "What could I do to fill this time?" 3072 is the perfect game that keeps your brain awake while allowing you to take a break from what you're doing or simply entertain the mind when you're bored. Play whenever and as long as you like. Give it a try!
+Do you ever struggle to keep up with your daily habits or forget the progress you’ve made? Our habit tracker app makes it simple to stay consistent, track your streaks, and build the routines that matter most. Stay motivated, stay accountable, and watch your habits turn into lasting change.
 
 ### Design
 
