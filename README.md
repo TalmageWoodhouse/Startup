@@ -34,35 +34,34 @@ Here is a sequence Diagram showing how users interact with the application to mo
 sequenceDiagram
     actor You
     actor App
-    actor Otherplayer
-    You ->> App: Move
-    App -->> You: Update tiles and score
-    You ->> App: Bad move
-    App -->> You: End game, update highscore if necessary
-    App -->> You: Update highscores
-    App -->> Otherplayer: Update highscores
+    actor OtherUser
+    You ->> App: Add Habit
+    App -->> You: Update habit list
+    You ->> App: check off habit
+    App -->> You: move habit to done list, update streaks
+    App -->> OtherUser: Update streaks
 
 ```
 
 ### Key features
 
 - Secure login over HTTPS
-- Highscore displayed and saved for each time you play
-- Total score displayed in realtime
+- Streak displayed and saved for each time you use
+- Total streak displayed in realtime for your friends to see
 - Display of board and numbers
-- Automatic addition of variables when combined
-- Display of numbers sliding to different positions
+- Ability to connect with friends and keep each other accountable
+- Display of tiles changing positions and updating.
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Structure the basic layout of the webpage and game including the main gameboard, buttons, and score displays
-- **CSS** - Application styling such as colors and shape of number tiles, board layout, animations for tile movement and merging, and other styling for compatability with different devices.
-- **React** - Interactive user interface. Handle the game state, manage tile movements and merges, update scores, and start new game.
-- **Service** - Implement games core logic such as moving tiles, merging tiles, checking game over conditions, and calculating scores, getting images from another api.
-- **DB/Login** - Save data of user logins and highscores in database.
-- **WebSocket** - Highscores are saved for everyone to see, live leaderboard.
+- **HTML** - Structure the basic layout of the webpage and including the main dashboard, buttons, and streak displays
+- **CSS** - Application styling such as colors and shape of number tiles, board layout, animations for tile movement, and other styling for compatability with different devices.
+- **React** - Interactive user interface. Handle the tile state, update streaks, and add new tiles.
+- **Service** - Implement tracker core logic such as adding and updating tiles, checking dashboard conditions, calculating streaks.
+- **DB/Login** - Save data of user logins, streaks, and track days habits were completed in database.
+- **WebSocket** - Streaks are saved for friends to see.
 
 ## 🚀 AWS deliverable
 
