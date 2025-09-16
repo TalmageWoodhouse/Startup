@@ -28,7 +28,7 @@ Do you ever struggle to keep up with your daily habits or forget the progress yo
 
 ![Design image](HabitTracker.png)
 
-Here is a sequence Diagram showing how users interact with the application to move pieces and increment tiles.
+Here is a sequence Diagram showing how users interact with the application to complete tasks and see their streaks or their habits on certain days.
 
 ```mermaid
 sequenceDiagram
