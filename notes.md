@@ -22,7 +22,7 @@ No problems worked just like it said in the [instruction](https://github.com/web
 ## HTML
 
 Main, div, nav, ul, li, table, span are basically the most popular tags that I will use.
-
+yes
 ## CSS
 
 It was important to make it responsive and Bootstrap helped with that. It looks great on all kinds of screen sizes.
