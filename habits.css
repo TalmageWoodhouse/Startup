@@ -1,41 +1,6 @@
-/* Scope it so only the scores table is affected */
-main table {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-  border-radius: 8px !important;
-  overflow: hidden;
-}
-
-/* Header */
-main table thead th {
-  font-size: 1.1rem !important;
-  font-weight: bold !important;
-  text-transform: uppercase;
-  background-color: #f87171 !important; /* soft red */
-  color: white !important;
-}
-
-/* Hover effect */
-main table tbody tr:hover {
-  background-color: #fef3c7 !important; /* light yellow */
-  transition: background 0.3s ease;
-}
-
-/* Top 3 highlight */
-main table tbody tr:nth-child(1) {
-  background-color: gold !important;
-}
-main table tbody tr:nth-child(2) {
-  background-color: silver !important;
-}
-main table tbody tr:nth-child(3) {
-  background-color: #cd7f32 !important; /* bronze */
-}
-
-/* Streak column */
-main table tbody td:last-child {
-  font-size: 1.2rem !important;
-  font-weight: 700 !important;
-  color: #d63384 !important; /* Bootstrap pink */
+.card {
+  background-color: orange;
+  color: white;
 }
 
 .player-event {
