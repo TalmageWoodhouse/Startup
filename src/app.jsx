@@ -4,45 +4,49 @@ import "./app.css";
 
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import { Login } from "./login/login";
-import { Habits } from "./habit/habit";
+import { Habits } from "./habits/habits";
 import { Scores } from "./scores/scores";
 import { About } from "./about/about";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div>
-        <header className="bg-primary text-white py-3">
-          <div className="container d-flex justify-content-between align-items-center">
-            <h1 className="h3 m-0">My Habits</h1>
-            <nav>
-              <ul className="nav">
-                <li className="nav-item">
-                  <a className="nav-link text-white" href="index.html">
-                    Login
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link text-white" href="habits.html">
-                    My Habits
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link text-white" href="scores.html">
-                    Scores
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link text-white" href="about.html">
-                    About
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+      <div className="body">
+        <header className="container-fluid">
+          <nav className="navbar fixed-top navbar-primary">
+            <div className="navbar-brand">My Habits</div>
+            <menu className="navbar-nav">
+              <li className="nav-item">
+                <NavLink className="nav-link text-dark" to="">
+                  Login
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link text-dark" to="habits">
+                  My Habits
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link text-dark" to="scores">
+                  Scores
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link text-dark" to="about">
+                  About
+                </NavLink>
+              </li>
+            </menu>
+          </nav>
         </header>
 
-        <main>App components go here</main>
+        <Routes>
+          <Route path="/" element={<Login />} exact />
+          <Route path="/play" element={<Play />} />
+          <Route path="/scores" element={<Scores />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
 
         <footer className="bg-dark text-white mt-auto py-3">
           <div className="container d-flex justify-content-between align-items-center">
@@ -57,5 +61,13 @@ export default function App() {
         </footer>
       </div>
     </BrowserRouter>
+  );
+}
+
+function NotFound() {
+  return (
+    <main className="container-fluid bg-secondary text-center">
+      404: Return to sender. Address unknown.
+    </main>
   );
 }

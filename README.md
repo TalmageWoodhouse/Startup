@@ -10,7 +10,7 @@ MyHabits is an app that most efficiently and easily tracks your daily habits. Th
 ## 🚀 Specification Deliverable
 
 > [!NOTE]
->  Fill in this sections as the submission artifact for this deliverable. You can refer to this [example](https://github.com/webprogramming260/startup-example/blob/main/README.md) for inspiration.
+> Fill in this sections as the submission artifact for this deliverable. You can refer to this [example](https://github.com/webprogramming260/startup-example/blob/main/README.md) for inspiration.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
@@ -120,7 +120,6 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
 - [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
 
-
 ## 🚀 DB deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
@@ -137,3 +136,48 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
 - [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
 - [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+
+.body {
+display: flex;
+flex-direction: column;
+min-width: 375px;
+}
+
+header {
+/_ background-color: rgb(202, 220, 236); _/
+/_ text-align: center; _/
+}
+
+main {
+background: white;
+padding: 1rem;
+margin: 1rem;
+border-radius: 8px;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+flex: 0 30px;
+background-color: rgb(202, 220, 236);
+padding: 1em;
+
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
+}
+
+footer a {
+text-decoration: none;
+color: black;
+}
+
+footer a:hover {
+color: brown;
+transform: scale(1.05);
+text-decoration: underline;
+}
