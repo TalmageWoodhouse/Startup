@@ -23,7 +23,7 @@ export default function App() {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link text-dark" to="habits">
-                  My Habits
+                  Habits
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -42,14 +42,14 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<Login />} exact />
-          <Route path="/play" element={<Play />} />
+          <Route path="/habits" element={<Habits />} />
           <Route path="/scores" element={<Scores />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
         <footer className="bg-dark text-white mt-auto py-3">
-          <div className="container d-flex justify-content-between align-items-center">
+          <div className="container-fluid">
             <span>Talmage</span>
             <a
               href="https://github.com/TalmageWoodhouse/Startup"

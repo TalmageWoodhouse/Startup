@@ -14,41 +14,39 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+menu {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+.navbar-brand {
+  padding-left: 1em;
+}
+
+menu .navitem {
+  padding: 0 1em;
 }
 
 footer {
   flex: 0 30px;
 }
 
-menu {
-  flex: 1;
-  display: flex;
-  /*  overwrite Bootstrap so the menu does not wrap */
-  flex-direction: row !important;
-  list-style: none;
-}
-
-.navbar-brand {
-  padding-left: 0.3em;
-  border-bottom: solid rgb(182, 182, 182) thin;
-}
-
-menu .nav-item {
-  padding: 0 0.3em;
-}
-
 footer a {
   float: right;
+  text-decoration: none;
+  color: black;
 }
 
-@media (max-height: 600px) {
-  header {
-    display: none;
-  }
-  footer {
-    display: none;
-  }
-  main {
-    flex: 1 100vh;
-  }
+footer a:hover {
+  color: brown;
+  transform: scale(1.05);
+  text-decoration: underline;
 }
