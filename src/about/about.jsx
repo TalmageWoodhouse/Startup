@@ -5,7 +5,7 @@ export function About() {
     <main className="container flex-grow-1 my-4 text-center">
       <div id="picture" className="mb-4">
         <img
-          src="./images/motivation.jpg"
+          src="/motivation.jpg"
           alt="Habit tracker pic"
           className="img-fluid rounded"
           style={{ maxWidth: "400px" }}
