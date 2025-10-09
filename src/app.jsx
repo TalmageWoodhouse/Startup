@@ -15,7 +15,7 @@ export default function App() {
         <header className="container-fluid">
           <nav className="navbar fixed-top navbar-primary">
             <div className="navbar-brand">My Habits</div>
-            <ul className="navbar-nav">
+            <menu className="navbar-nav">
               <li className="nav-item">
                 <NavLink className="nav-link text-white" to="">
                   Login
@@ -36,7 +36,7 @@ export default function App() {
                   About
                 </NavLink>
               </li>
-            </ul>
+            </menu>
           </nav>
         </header>
 

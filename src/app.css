@@ -41,7 +41,7 @@ menu .nav-item {
   transform: scale(1.15);
 }
 
-ul .navbar-nav {
+main {
   flex: 1;
   min-height: calc(100vh - 110px);
   display: flex;
