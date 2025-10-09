@@ -4,7 +4,6 @@ export function Scores() {
   return (
     <main className="container flex-grow-1 my-4">
       <h3 className="text-center mb-4">Scores</h3>
-
       <div className="table-responsive">
         <table className="table table-striped table-bordered text-center">
           <thead className="table-danger">

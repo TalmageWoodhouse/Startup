@@ -1,11 +1,11 @@
 import React from "react";
+import "./habits.css";
 
 export function Habits() {
   return (
     <main className="container flex-grow-1 my-4">
       <h3 className="mb-3 text-center">Today</h3>
       <p className="text-center">Sept. 27, 2025</p>
-
       <div className="row g-2 mb-4 text-center">
         <div className="col">
           <button className="btn btn-outline-secondary w-100">Mon</button>

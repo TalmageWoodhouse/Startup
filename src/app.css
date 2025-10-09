@@ -40,6 +40,10 @@
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
+main {
+  padding: 70px;
+}
+
 .nav-link:hover {
   transform: scale(1.15);
 }

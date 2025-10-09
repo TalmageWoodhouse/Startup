@@ -8,7 +8,7 @@ export function About() {
           src="./images/motivation.jpg"
           alt="Habit tracker pic"
           className="img-fluid rounded"
-          style="max-width: 400px"
+          style={{ maxWidth: "400px" }}
         />
       </div>
 
