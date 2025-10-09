@@ -15,7 +15,7 @@ export default function App() {
         <header className="container-fluid">
           <nav className="navbar fixed-top navbar-primary">
             <div className="navbar-brand">My Habits</div>
-            <menu className="navbar-nav">
+            <div className="navbar-nav">
               <li className="nav-item">
                 <NavLink className="nav-link text-white" to="">
                   Login
@@ -36,12 +36,12 @@ export default function App() {
                   About
                 </NavLink>
               </li>
-            </menu>
+            </div>
           </nav>
         </header>
 
         <Routes>
-          <Route path="/" element={<Login />} exact />
+          <Route path="/" element={<Login />} />
           <Route path="/habits" element={<Habits />} />
           <Route path="/scores" element={<Scores />} />
           <Route path="/about" element={<About />} />
