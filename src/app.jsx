@@ -11,28 +11,28 @@ import { About } from "./about/about";
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="body">
+      <div className="body d-flex flex-column min-vh-100">
         <header className="container-fluid">
           <nav className="navbar fixed-top navbar-primary">
             <div className="navbar-brand">My Habits</div>
             <menu className="navbar-nav">
               <li className="nav-item">
-                <NavLink className="nav-link text-dark" to="">
+                <NavLink className="nav-link text-white" to="">
                   Login
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link text-dark" to="habits">
+                <NavLink className="nav-link text-white" to="habits">
                   Habits
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link text-dark" to="scores">
+                <NavLink className="nav-link text-white" to="scores">
                   Scores
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link text-dark" to="about">
+                <NavLink className="nav-link text-white" to="about">
                   About
                 </NavLink>
               </li>
