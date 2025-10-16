@@ -77,21 +77,21 @@ Setting up Vite and React was pretty simple. I had a bit of trouble because of c
 - Arrow Functions
 - Closure
   ```jsx
-        function makeClosure(init) {
-        let closureValue = init;
-        return () => {
-          return `closure ${++closureValue}`;
-        };
-      }
+  function makeClosure(init) {
+  let closureValue = init;
+  return () => {
+    return `closure ${++closureValue}`;
+  };
+}
   ```
   ```jsx
-      const closure = makeClosure(0);
+const closure = makeClosure(0);
 
-      console.log(closure());
-      // OUTPUT: closure 1
-      
-      console.log(closure());
-      // OUTPUT: closure 2
+console.log(closure());
+// OUTPUT: closure 1
+
+console.log(closure());
+// OUTPUT: closure 2
   ```
 
 This was a lot of fun to see it all come together. I had to keep remembering to use React state instead of just manipulating the DOM directly.
