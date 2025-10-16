@@ -74,26 +74,24 @@ Setting up Vite and React was pretty simple. I had a bit of trouble because of c
 
 ## React Part 2: Reactivity
 
+- Arrow Functions
+- Closure
+  ```jsx
+        function makeClosure(init) {
+        let closureValue = init;
+        return () => {
+          return `closure ${++closureValue}`;
+        };
+      }
+  ```
+  ```jsx
+      const closure = makeClosure(0);
+
+      console.log(closure());
+      // OUTPUT: closure 1
+      
+      console.log(closure());
+      // OUTPUT: closure 2
+  ```
+
 This was a lot of fun to see it all come together. I had to keep remembering to use React state instead of just manipulating the DOM directly.
-
-Handling the toggling of the checkboxes was particularly interesting.
-
-```jsx
-<div className="input-group sound-button-container">
-  {calmSoundTypes.map((sound, index) => (
-    <div key={index} className="form-check form-switch">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value={sound}
-        id={sound}
-        onChange={() => togglePlay(sound)}
-        checked={selectedSounds.includes(sound)}
-      ></input>
-      <label className="form-check-label" htmlFor={sound}>
-        {sound}
-      </label>
-    </div>
-  ))}
-</div>
-```
