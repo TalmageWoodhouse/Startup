@@ -76,7 +76,7 @@ Setting up Vite and React was pretty simple. I had a bit of trouble because of c
 
 - Arrow Functions
 - Closure
-```
+```jsx
 function makeClosure(init) {
   let closureValue = init;
   return () => {
@@ -84,7 +84,7 @@ function makeClosure(init) {
   };
 }
 ```
-```
+```jsx
 const closure = makeClosure(0);
 
 console.log(closure());
