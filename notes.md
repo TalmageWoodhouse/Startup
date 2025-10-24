@@ -14,7 +14,6 @@ My IP address is: 44.215.99.218
 route 53; hosted zones, and registered domains
 EC2; elastic IP, public IP, instances
 
-
 ## Caddy
 
 No problems worked just like it said in the [instruction](https://github.com/webprogramming260/.github/blob/main/profile/webServers/https/https.md).
@@ -23,6 +22,7 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 Main, div, nav, ul, li, table, span are basically the most popular tags that I will use.
 yes
+
 ## CSS
 
 It was important to make it responsive and Bootstrap helped with that. It looks great on all kinds of screen sizes.
@@ -64,9 +64,59 @@ I also used SVG to make the icon and logo for the app. This turned out to be a p
 ```html
 <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
   <rect width="100" height="100" fill="#0066aa" rx="10" ry="10" />
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="72" font-family="Arial" fill="white">C</text>
+  <text
+    x="50%"
+    y="50%"
+    dominant-baseline="central"
+    text-anchor="middle"
+    font-size="72"
+    font-family="Arial"
+    fill="white"
+  >
+    C
+  </text>
 </svg>
 ```
+
+## Java Script
+
+Arrow functions are a compact function syntax. (a, b) => a + b means a function with parameters a and b that
+returns a+b.
+Examples:
+
+```js
+const add = (a, b) => a + b;
+const greet = name => `Hi ${name}`;
+const square = x => { return x * x; } // block form
+Note: arrow functions do not bind their own 'this' and are not suitable as constructors.
+```
+
+map() transforms every element of an array and returns a new array without mutating the original.
+Examples:
+
+```js
+const nums = [1, 2, 3];
+const doubled = nums.map((n) => n * 2); // [2,4,6]
+const names = ["Amy", "Bob"];
+const greetings = names.map((n) => `Hi ${n}`); // ['Hi Amy','Hi Bob']
+```
+
+getElementByID and addEventListener
+
+```js
+const btn = document.getElementById("btn");
+btn.addEventListener("click", () => console.log("Clicked!"));
+```
+
+## Difference Between `getElementById()` and `querySelector()`
+
+| Feature              | `getElementById()`                  | `querySelector()`                                                       |
+| -------------------- | ----------------------------------- | ----------------------------------------------------------------------- |
+| **Selector type**    | Only works with **id** (no `#`)     | Works with **any CSS selector** (`#id`, `.class`, `tag`, etc.)          |
+| **Syntax**           | `document.getElementById("btn")`    | `document.querySelector("#btn")`                                        |
+| **Return value**     | The element, or `null` if not found | The **first** element that matches, or `null` if none                   |
+| **Multiple matches** | Not possible (IDs are unique)       | Only returns the first match — use `querySelectorAll()` for all matches |
+| **Speed**            | Slightly faster (older, simpler)    | Slightly slower (more flexible)                                         |
 
 ## React Part 1: Routing
 
