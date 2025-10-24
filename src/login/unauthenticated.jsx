@@ -1,5 +1,7 @@
 import React from "react";
-import { messageDialog } from "./messageDialog";
+
+import Button from "react-bootstrap/Button";
+import { MessageDialog } from "./messageDialog";
 
 export function Unauthenticated(props) {
   const [userName, setUserName] = React.useState(props.userName);
@@ -8,7 +10,7 @@ export function Unauthenticated(props) {
 
   async function loginUser() {
     localStorage.setItem("userName", userName);
-    props.onLoging(userName);
+    props.onLogin(userName);
   }
 
   async function createUser() {
@@ -19,6 +21,9 @@ export function Unauthenticated(props) {
   return (
     <>
       <div>
+        <h4 className="mb-4 text-center">
+          This is where you take control of your life!
+        </h4>
         <div className="input-group mb-3">
           <input
             className="form-control"
@@ -29,7 +34,6 @@ export function Unauthenticated(props) {
           />
         </div>
         <div className="input-group mb-3">
-          <span className="input-group-text">🔒</span>
           <input
             className="form-control"
             type="password"
@@ -37,20 +41,20 @@ export function Unauthenticated(props) {
             placeholder="password"
           />
         </div>
-        <button
+        <Button
           variant="primary"
           onClick={() => loginUser()}
           disabled={!userName || !password}
         >
           Login
-        </button>
-        <button
+        </Button>
+        <Button
           variant="secondary"
           onClick={() => createUser()}
           disabled={!userName || !password}
         >
           Create
-        </button>
+        </Button>
       </div>
 
       <MessageDialog
