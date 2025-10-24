@@ -3,12 +3,26 @@ import React from "react";
 export function Login() {
   return (
     <main className="d-flex flex-column justify-content-center align-items-center flex-grow-1 m-4">
-      <h4 className="mb-4 text-center">
-        This is where you take control of your life!
-      </h4>
-      <form method="get" action="habits.html" className="w-50">
+      <div>
+        {authState !== authState.Unknown && <h1>Welcome to My Habits</h1>}
+
+        {authState === authState.Athenticated && (
+          <div>
+            <h4 className="mb-4">This is where you take control of your life!</h4>
+            <p className="lead">Welcome back, {userName}!</p>
+            <button className="btn btn-danger" onClick={() => onAuthChange(userName, AuthState.Unauthenticated)}>Logout</button>
+          </div>
+
+        )}
+        {AuthState === AuthState.Unauthenticated && (
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            const loginUserName = e.target.elements.username.value;
+            onAuthChange(loginUserName, AuthState.Authenticated);
+          }}
+        )}
+      
         <div className="mb-3">
-          <label className="form-label">User</label>
           <input
             type="text"
             className="form-control"
@@ -16,7 +30,6 @@ export function Login() {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Password</label>
           <input
             type="password"
             className="form-control"
@@ -30,6 +43,7 @@ export function Login() {
           Create
         </button>
       </form>
+      </div>
     </main>
   );
 }
