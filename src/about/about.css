@@ -1,0 +1,7 @@
+.quote-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px;
+  border-radius: 5px;
+}

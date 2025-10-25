@@ -1,6 +1,13 @@
 import React from "react";
+import "./about.css";
 
 export function About() {
+  const [quote, setQuote] = React.useState("Loading...");
+
+  React.useEffect(() => {
+    setQuote("Anime Quote");
+  }, []);
+
   return (
     <main className="container flex-grow-1 my-4 text-center">
       <div id="picture" className="mb-4">
@@ -19,8 +26,8 @@ export function About() {
         productivity and satisfaction.
       </p>
 
-      <div id="quote" className="fst-italic h5">
-        "Anime quote"
+      <div className="quote-box bg-light fst-italic h5">
+        <p className="quote">{quote}</p>
       </div>
     </main>
   );

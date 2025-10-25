@@ -9,6 +9,14 @@ import { Scores } from "./scores/scores";
 import { About } from "./about/about";
 
 export default function App() {
+  const [userName, setUserName] = React.useState(
+    localStorage.getItem("userName") || ""
+  );
+  const currentAuthState = userName
+    ? AuthState.Authenticated
+    : AuthState.Unauthenticated;
+  const [authState, setAuthState] = React.useState(currentAuthState);
+
   return (
     <BrowserRouter>
       <div className="body d-flex flex-column min-vh-100">
@@ -21,16 +29,20 @@ export default function App() {
                   Login
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link text-white" to="habits">
-                  Habits
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link text-white" to="scores">
-                  Scores
-                </NavLink>
-              </li>
+              {authState === AuthState.Athenticated && (
+                <li className="nav-item">
+                  <NavLink className="nav-link text-white" to="habits">
+                    Habits
+                  </NavLink>
+                </li>
+              )}
+              {authState === AuthState.Athenticated && (
+                <li className="nav-item">
+                  <NavLink className="nav-link text-white" to="scores">
+                    Scores
+                  </NavLink>
+                </li>
+              )}
               <li className="nav-item">
                 <NavLink className="nav-link text-white" to="about">
                   About
@@ -41,8 +53,21 @@ export default function App() {
         </header>
 
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/habits" element={<Habits />} />
+          <Route
+            path="/"
+            element={
+              <Login
+                userName={userName}
+                authState={authState}
+                onAuthChange={(userName, authState) => {
+                  setAuthState(authState);
+                  setUserName(userName);
+                }}
+              />
+            }
+            exact
+          />
+          <Route path="/habits" element={<Habits userName={userName} />} />
           <Route path="/scores" element={<Scores />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
