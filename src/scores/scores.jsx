@@ -1,6 +1,37 @@
 import React from "react";
 
 export function Scores() {
+  const [scores, setScores] = React.useState([]);
+
+  //load scores from local storage
+  React.useEffect(() => {
+    const scoresText = localStorage.getItem("scores");
+    if (scoresText) {
+      setScores(JSON.parse(scoresText));
+    }
+  }, []);
+
+  // generate table rows
+  const scoreRows = [];
+  if (scores.length) {
+    for (const [i, score] of scores.entries()) {
+      scoreRows.push(
+        <tr key={i}>
+          <td>{i}</td>
+          <td>{score.name.split("@")[0]}</td>
+          <td>{score.score}</td>
+          <td>{score.date}</td>
+        </tr>
+      );
+    }
+  } else {
+    scoreRows.push(
+      <tr key="0">
+        <td colSpan="4">Be the first to score</td>
+      </tr>
+    );
+  }
+
   return (
     <main className="container flex-grow-1 my-4">
       <h3 className="text-center mb-4">Scores</h3>
@@ -13,18 +44,7 @@ export function Scores() {
               <th>Streak</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>TOM</td>
-              <td>6🔥</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>TAG</td>
-              <td>5🔥</td>
-            </tr>
-          </tbody>
+          <tbody>{scoreRows}</tbody>
         </table>
       </div>
     </main>
