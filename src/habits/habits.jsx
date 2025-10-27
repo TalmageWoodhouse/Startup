@@ -2,6 +2,12 @@ import React from "react";
 import "./habits.css";
 
 export function Habits() {
+  const [habits, setHabits] = React.useState([]);
+  const [completedHabits, setCompletedHabits] = React.useState([]);
+  const [friends, setFriends] = React.useState([]);
+  const [selectedDay, setSelectedDay] = React.useState(['Wed']);
+
+  React.useEffect(() => )
   return (
     <main className="container flex-grow-1 my-4">
       <h3 className="mb-3 text-center">Today</h3>

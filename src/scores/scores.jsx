@@ -17,24 +17,23 @@ export function Scores() {
     for (const [i, score] of scores.entries()) {
       scoreRows.push(
         <tr key={i}>
-          <td>{i}</td>
-          <td>{score.name.split("@")[0]}</td>
-          <td>{score.score}</td>
-          <td>{score.date}</td>
+          <td>{i + 1}</td>
+          <td>{score.name?.split("@")[0] || "Unknown"}</td>
+          <td>{score.streak || 0}🔥</td>
         </tr>
       );
     }
   } else {
     scoreRows.push(
       <tr key="0">
-        <td colSpan="4">Be the first to score</td>
+        <td colSpan="4">Be the first to start a streak!</td>
       </tr>
     );
   }
 
   return (
     <main className="container flex-grow-1 my-4">
-      <h3 className="text-center mb-4">Scores</h3>
+      <h3 className="text-center mb-4">Streaks</h3>
       <div className="table-responsive">
         <table className="table table-striped table-bordered text-center">
           <thead className="table-danger">
