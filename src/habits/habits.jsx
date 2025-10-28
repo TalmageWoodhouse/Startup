@@ -5,9 +5,20 @@ export function Habits() {
   const [habits, setHabits] = React.useState([]);
   const [completedHabits, setCompletedHabits] = React.useState([]);
   const [friends, setFriends] = React.useState([]);
-  const [selectedDay, setSelectedDay] = React.useState(['Wed']);
+  const [selectedDay, setSelectedDay] = React.useState(["Wed"]);
 
-  React.useEffect(() => )
+  React.useEffect(() => {
+    const habitsData = localStorage.getItem("habits");
+    const friendsData = localStorage.getItem("friends");
+    const completedData = localStorage.getItem("completed");
+
+    if (friendsData) setFriends(JSON.parse(friendData));
+    if (habitsData) setScores(JSON.parse(habitsData));
+    if (completedData) setCompletedHabits(JSON.parse(completedData));
+  }, []);
+
+  const days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+
   return (
     <main className="container flex-grow-1 my-4">
       <h3 className="mb-3 text-center">Today</h3>
@@ -36,53 +47,60 @@ export function Habits() {
         </div>
       </div>
 
+      {/* Habits Section */}
       <h4 className="mb-3">Habit Tiles</h4>
       <div className="row g-3 mb-4">
-        <div className="col">
-          <div className="card p-3 text-center">Habit #1</div>
-        </div>
-        <div className="col">
-          <div className="card p-3 text-center">Habit #2</div>
-        </div>
-        <div className="col">
-          <div className="card p-3 text-center">Habit #3</div>
-        </div>
+        {habits.length > 0 ? (
+          habits.map((habit, index) => (
+            <div className="col-md-4" key={index}>
+              <div className="card p-3 text-center">{habit.name}</div>
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-muted">No habits yet — add one!</p>
+        )}
       </div>
 
+      {/* Done Section */}
       <h4 className="mb-3">Done</h4>
       <div className="row g-3 mb-4">
-        <div className="col-md-6">
-          <div className="card p-3 text-center bg-success text-white">
-            Habit done
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div className="card p-3 text-center bg-success text-white">
-            Habit done
-          </div>
-        </div>
+        {completedHabits.length > 0 ? (
+          completedHabits.map((habit, index) => (
+            <div className="col-md-6" key={index}>
+              <div className="card p-3 text-center bg-success text-white">
+                {habit.name} ✅
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-muted">No completed habits yet</p>
+        )}
       </div>
 
+      {/* Add Habit Button */}
       <div className="mt-4 text-center">
-        <button className="btn btn-primary">Add New Habit</button>
+        <button
+          className="btn btn-primary"
+          onClick={() => alert("Feature coming soon!")}
+        >
+          Add New Habit
+        </button>
       </div>
-
-      <div className="websocket mt-4">
+      {/* Friends Section */}
+      <div className="websocket mt-5">
         <h4>Friends:</h4>
-        <ul className="list-group">
-          <li className="list-group-item">
-            <span className="player-event">John</span>
-            got their homework streak up to 40
-          </li>
-          <li className="list-group-item">
-            <span className="player-event">Lin</span>
-            got their workout streak up to 100
-          </li>
-          <li className="list-group-item">
-            <span className="system-event">Cal</span>
-            got their walk for 10min streak up to 70
-          </li>
-        </ul>
+        {friends.length > 0 ? (
+          <ul className="list-group">
+            {friends.map((f, index) => (
+              <li className="list-group-item" key={index}>
+                <span className="player-event">{f.name}</span> got their{" "}
+                {f.habit} streak up to {f.streak}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-muted">No friend activity yet</p>
+        )}
       </div>
     </main>
   );
