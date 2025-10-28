@@ -22,29 +22,24 @@ export function Habits() {
   return (
     <main className="container flex-grow-1 my-4">
       <h3 className="mb-3 text-center">Today</h3>
-      <p className="text-center">Sept. 27, 2025</p>
+      <p className="text-center">
+        {new Date().toDateString().replace(/ (\d{4})$/, ", $1")}
+      </p>
+
+      {/* Day Selector */}
       <div className="row g-2 mb-4 text-center">
-        <div className="col">
-          <button className="btn btn-outline-secondary w-100">Mon</button>
-        </div>
-        <div className="col">
-          <button className="btn btn-outline-secondary w-100">Tues</button>
-        </div>
-        <div className="col">
-          <button className="btn btn-primary w-100">Wed</button>
-        </div>
-        <div className="col">
-          <button className="btn btn-outline-secondary w-100">Thurs</button>
-        </div>
-        <div className="col">
-          <button className="btn btn-outline-secondary w-100">Fri</button>
-        </div>
-        <div className="col">
-          <button className="btn btn-outline-secondary w-100">Sat</button>
-        </div>
-        <div className="col">
-          <button className="btn btn-outline-secondary w-100">Sun</button>
-        </div>
+        {days.map((day) => (
+          <div className="col" key={day}>
+            <button
+              className={`btn w-100 ${
+                selectedDay === day ? "btn-primary" : "btn-outline-secondary"
+              }`}
+              onClick={() => setSelectedDay(day)}
+            >
+              {day}
+            </button>
+          </div>
+        ))}
       </div>
 
       {/* Habits Section */}
