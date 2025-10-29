@@ -56,8 +56,8 @@ export function Habits() {
         )}
       </div>
 
-      {/* Done Section */}
-      <h4 className="mb-3">Done</h4>
+      {/* Completed Section */}
+      <h4 className="mb-3">Completed</h4>
       <div className="row g-3 mb-4">
         {completedHabits.length > 0 ? (
           completedHabits.map((habit, index) => (

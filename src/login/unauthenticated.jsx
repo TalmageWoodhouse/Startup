@@ -30,7 +30,7 @@ export function Unauthenticated(props) {
             type="text"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            placeholder="your@email.com"
+            placeholder="Username"
           />
         </div>
         <div className="input-group mb-3">

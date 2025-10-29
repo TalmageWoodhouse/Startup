@@ -7,6 +7,7 @@ import { Login } from "./login/login";
 import { Habits } from "./habits/habits";
 import { Scores } from "./scores/scores";
 import { About } from "./about/about";
+import { AuthState } from "./login/authState";
 
 export default function App() {
   const [userName, setUserName] = React.useState(
