@@ -30,14 +30,14 @@ export default function App() {
                   Login
                 </NavLink>
               </li>
-              {authState === AuthState.Athenticated && (
+              {authState === AuthState.Authenticated && (
                 <li className="nav-item">
                   <NavLink className="nav-link text-white" to="habits">
                     Habits
                   </NavLink>
                 </li>
               )}
-              {authState === AuthState.Athenticated && (
+              {authState === AuthState.Authenticated && (
                 <li className="nav-item">
                   <NavLink className="nav-link text-white" to="scores">
                     Scores

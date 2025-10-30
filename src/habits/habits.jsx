@@ -1,7 +1,8 @@
 import React from "react";
 import "./habits.css";
+import { Friends } from "./friends";
 
-export function Habits() {
+export function Habits(props) {
   const [habits, setHabits] = React.useState([]);
   const [completedHabits, setCompletedHabits] = React.useState([]);
   const [friends, setFriends] = React.useState([]);
@@ -24,7 +25,7 @@ export function Habits() {
     if (!newHabitName.trim()) return;
     const updatedHabits = [...habits, { name: newHabitName }];
     setHabits(updatedHabits);
-    localStrage.setItem("habits", JSON.stringify(updatedHabits));
+    localStorage.setItem("habits", JSON.stringify(updatedHabits));
     setNewHabitName("");
   }
 
@@ -122,19 +123,7 @@ export function Habits() {
 
       {/* Friends Section */}
       <div className="websocket mt-5">
-        <h4>Friends:</h4>
-        {friends.length > 0 ? (
-          <ul className="list-group">
-            {friends.map((f, index) => (
-              <li className="list-group-item" key={index}>
-                <span className="player-event">{f.name}</span> got their{" "}
-                {f.habit} streak up to {f.streak}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-muted">No friend activity yet</p>
-        )}
+        <Friends userName={props.userName} />
       </div>
     </main>
   );
