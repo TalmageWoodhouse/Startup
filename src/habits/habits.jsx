@@ -6,18 +6,39 @@ export function Habits() {
   const [completedHabits, setCompletedHabits] = React.useState([]);
   const [friends, setFriends] = React.useState([]);
   const [selectedDay, setSelectedDay] = React.useState(["Wed"]);
+  const [newHabitName, setNewHabitName] = React.useState("");
 
   React.useEffect(() => {
     const habitsData = localStorage.getItem("habits");
     const friendsData = localStorage.getItem("friends");
     const completedData = localStorage.getItem("completed");
 
-    if (friendsData) setFriends(JSON.parse(friendData));
-    if (habitsData) setScores(JSON.parse(habitsData));
+    if (friendsData) setFriends(JSON.parse(friendsData));
+    if (habitsData) setHabits(JSON.parse(habitsData));
     if (completedData) setCompletedHabits(JSON.parse(completedData));
   }, []);
 
   const days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+
+  function addHabit() {
+    if (!newHabitName.trim()) return;
+    const updatedHabits = [...habits, { name: newHabitName }];
+    setHabits(updatedHabits);
+    localStrage.setItem("habits", JSON.stringify(updatedHabits));
+    setNewHabitName("");
+  }
+
+  function completeHabit(index) {
+    const habitToComplete = habits[index];
+    const updatedHabits = habits.filter((_, i) => i !== index);
+    const updateCompleted = [...completedHabits, habitToComplete];
+
+    setHabits(updatedHabits);
+    setCompletedHabits(updateCompleted);
+
+    localStorage.setItem("habits", JSON.stringify(updatedHabits));
+    localStorage.setItem("completed", JSON.stringify(updateCompleted));
+  }
 
   return (
     <main className="container flex-grow-1 my-4">
@@ -48,12 +69,39 @@ export function Habits() {
         {habits.length > 0 ? (
           habits.map((habit, index) => (
             <div className="col-md-4" key={index}>
-              <div className="card p-3 text-center">{habit.name}</div>
+              <div className="card p-3 text-center">
+                <p>{habit.name}</p>
+                <button
+                  className="btn btn-secondary mt-2"
+                  onClick={() => completeHabit(index)}
+                >
+                  Complete
+                </button>
+              </div>
             </div>
           ))
         ) : (
           <p className="text-center text-muted">No habits yet — add one!</p>
         )}
+      </div>
+
+      {/* New Habit input */}
+      <input
+        type="text"
+        className="form-control mb-2"
+        value={newHabitName}
+        onChange={(e) => setNewHabitName(e.target.value)}
+        placeholder="Enter new habit"
+      />
+
+      {/* Add Habit Button */}
+      <div className="mt-4 text-center">
+        <button
+          className="btn btn-primary"
+          onClick={() => addHabit("newHabitName")}
+        >
+          Add New Habit
+        </button>
       </div>
 
       {/* Completed Section */}
@@ -72,15 +120,6 @@ export function Habits() {
         )}
       </div>
 
-      {/* Add Habit Button */}
-      <div className="mt-4 text-center">
-        <button
-          className="btn btn-primary"
-          onClick={() => alert("Feature coming soon!")}
-        >
-          Add New Habit
-        </button>
-      </div>
       {/* Friends Section */}
       <div className="websocket mt-5">
         <h4>Friends:</h4>
