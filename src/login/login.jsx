@@ -13,7 +13,13 @@ export function Login({ userName, authState, onAuthChange }) {
         {authState === AuthState.Authenticated && (
           <Authenticated
             userName={userName}
-            onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)}
+            onLogout={() => {
+              // Clear user-specific habit data on logout
+              localStorage.removeItem("habits");
+              localStorage.removeItem("completed");
+
+              onAuthChange(userName, AuthState.Unauthenticated);
+            }}
           />
         )}
 

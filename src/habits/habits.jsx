@@ -32,13 +32,20 @@ export function Habits(props) {
   function completeHabit(index) {
     const habitToComplete = habits[index];
     const updatedHabits = habits.filter((_, i) => i !== index);
-    const updateCompleted = [...completedHabits, habitToComplete];
+
+    const newCompletion = {
+      name: props.userName || "Unknown",
+      habit: habitToComplete.name,
+      date: new Date().toLocaleDateString(),
+    };
+
+    const updatedCompleted = [...completedHabits, newCompletion];
 
     setHabits(updatedHabits);
-    setCompletedHabits(updateCompleted);
+    setCompletedHabits(updatedCompleted);
 
     localStorage.setItem("habits", JSON.stringify(updatedHabits));
-    localStorage.setItem("completed", JSON.stringify(updateCompleted));
+    localStorage.setItem("completed", JSON.stringify(updatedCompleted));
   }
 
   return (
