@@ -106,8 +106,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [X] **All functionality implemented or mocked out** - I implemented authenitcation for my login page, functionailty to create and completed tasks on my habit page(I'm not implementing the calendar anymore because it is too complicated for me right now). I change functionality for my api quote generater on my about page, and scores page to update, when a habit is complete it counts how many are completed that day..
+- [x] **Hooks** - I implemented the use.State to store the data with a state hook setHabit, and use.Effect hook to load habits into local storage to put them into my scores table. I also use it to store and load the data from the habits page
 
 ## 🚀 Service deliverable
 
