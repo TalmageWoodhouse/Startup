@@ -4,6 +4,8 @@ const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const uuid = require("uuid");
 
+const authCookieName = "token";
+
 // memory data structures
 let users = [];
 let scores = [];
@@ -14,13 +16,16 @@ const port = process.argv.length > 2 ? process.argv[2] : 3000;
 // JSON parsing
 app.use(express.json());
 
+app.use(cookieParser());
+
+app.use(express.static("public"));
+
 // router path for endpoints
 let apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-{
-  /*Service Endpoints*/
-}
+/*Service Endpoints*/
+
 // CreateAuth a new user
 apiRouter.post("/auth/create", async (req, res) => {
   if (await findUser("email", req.body.email)) {
@@ -137,3 +142,7 @@ function setAuthCookie(res, authToken) {
     sameSite: "strict",
   });
 }
+
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
