@@ -9,14 +9,27 @@ export function Habits(props) {
   const [selectedDay, setSelectedDay] = React.useState(["Wed"]);
   const [newHabitName, setNewHabitName] = React.useState("");
 
+  // Load habits and streaks from backend on mount
   React.useEffect(() => {
-    const habitsData = localStorage.getItem("habits");
-    const friendsData = localStorage.getItem("friends");
-    const completedData = localStorage.getItem("completed");
+    async function loadData() {
+      try {
+        // Fetch saved habits and streak data from backend
+        const res = await fetch("/api/streak");
+        if (res.ok) {
+          const data = await res.json();
+          setHabits(data.habits || []); // Expect [{ name: 'Workout', streak: 3 }, ...]
+        }
 
-    if (friendsData) setFriends(JSON.parse(friendsData));
-    if (habitsData) setHabits(JSON.parse(habitsData));
-    if (completedData) setCompletedHabits(JSON.parse(completedData));
+        // Fallback to local data if backend unavailable
+        const friendsData = localStorage.getItem("friends");
+        const completedData = localStorage.getItem("completed");
+        if (friendsData) setFriends(JSON.parse(friendsData));
+        if (completedData) setCompletedHabits(JSON.parse(completedData));
+      } catch (err) {
+        console.error("Failed to load habits:", err);
+      }
+    }
+    loadData();
   }, []);
 
   const days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
