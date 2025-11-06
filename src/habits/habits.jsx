@@ -8,15 +8,45 @@ export function Habits(props) {
   const [friends, setFriends] = React.useState([]);
   const [selectedDay, setSelectedDay] = React.useState(["Wed"]);
   const [newHabitName, setNewHabitName] = React.useState("");
+  const [streak, setStreak] = React.useState(0);
 
   React.useEffect(() => {
-    const habitsData = localStorage.getItem("habits");
-    const friendsData = localStorage.getItem("friends");
-    const completedData = localStorage.getItem("completed");
+    // const habitsData = localStorage.getItem("habits");
+    // const friendsData = localStorage.getItem("friends");
+    // const completedData = localStorage.getItem("completed");
 
-    if (friendsData) setFriends(JSON.parse(friendsData));
-    if (habitsData) setHabits(JSON.parse(habitsData));
-    if (completedData) setCompletedHabits(JSON.parse(completedData));
+    // if (friendsData) setFriends(JSON.parse(friendsData));
+    // if (habitsData) setHabits(JSON.parse(habitsData));
+    // if (completedData) setCompletedHabits(JSON.parse(completedData));
+
+    async function loadData() {
+      try {
+        const [streakRes, habitsRes, friendsRes] = await Promise.all([
+          fetch("/api/streak"),
+          fetch("/api/habits"),
+          fetch("/api/friends"),
+        ]);
+
+        if (streakRes.ok) {
+          const { streak } = await streakRes.json();
+          setStreak(streak || 0);
+        }
+
+        if (habitsRes.ok) {
+          const data = await habitsRes.json();
+          setHabits(data.habits || []);
+        }
+
+        if (friendsRes.ok) {
+          const data = await friendsRes.json();
+          setFriends(data.friends || []);
+        }
+      } catch (err) {
+        console.error("Error loading data:", err);
+      }
+    }
+
+    loadData();
   }, []);
 
   // const days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
@@ -29,7 +59,7 @@ export function Habits(props) {
     setNewHabitName("");
   }
 
-  function completeHabit(index) {
+  async function completeHabit(index) {
     const habitToComplete = habits[index];
     const updatedHabits = habits.filter((_, i) => i !== index);
 
@@ -46,6 +76,22 @@ export function Habits(props) {
 
     localStorage.setItem("habits", JSON.stringify(updatedHabits));
     localStorage.setItem("completed", JSON.stringify(updatedCompleted));
+
+    // Increment streak on backend
+    try {
+      const res = await fetch("/api/streak", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ habit: habitToComplete.name }),
+      });
+
+      if (res.ok) {
+        const { streak: newStreak } = await res.json();
+        setStreak(newStreak);
+      }
+    } catch (err) {
+      console.error("Error updating streak:", err);
+    }
   }
 
   return (
@@ -119,7 +165,7 @@ export function Habits(props) {
           completedHabits.map((habit, index) => (
             <div className="col-md-6" key={index}>
               <div className="card p-3 text-center bg-success text-white">
-                {habit.name} ✅
+                {habit.habit} ✅
               </div>
             </div>
           ))

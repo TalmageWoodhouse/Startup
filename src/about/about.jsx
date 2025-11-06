@@ -5,15 +5,8 @@ export function About() {
   const [quote, setQuote] = React.useState("Loading...");
   const [character, setCharacter] = React.useState("");
   const [anime, setAnime] = React.useState("");
-  const [imageUrl, setImageUrl] = React.useState("/motivation.jpg");
 
   React.useEffect(() => {
-    // Fetch random anime image
-    fetch("https://api.waifu.pics/sfw/waifu")
-      .then((res) => res.json())
-      .then((data) => setImageUrl(data.url))
-      .catch(() => console.error("Failed to load anime image."));
-
     // Fetch anime quote
     fetch("https://animechan.xyz/api/random")
       .then((res) => res.json())
@@ -33,10 +26,10 @@ export function About() {
     <main className="container flex-grow-1 my-4 text-center">
       <div id="picture" className="mb-4">
         <img
-          src={imageUrl}
-          alt="Random Anime scene"
-          className="img-fluid rounded"
-          style={{ maxWidth: "400px", maxHeight: "400px", objectFit: "cover" }}
+          src="/motivation.jpg"
+          alt="Motivation"
+          className="img-fluid rounded shadow"
+          style={{ maxWidth: "400px" }}
         />
       </div>
 
@@ -47,8 +40,8 @@ export function About() {
         productivity and satisfaction.
       </p>
 
-      <div className="quote-box bg-light fst-italic h5 p-3 rounded">
-        <p className="quote mb-2">"{quote}"</p>
+      <div className="quote-box bg-light fst-italic h5 p-3 rounded shadow">
+        <p className="quote mb-2">"{quote}" </p>
         <p className="author text-muted">
           — {character}, <em>{anime}</em>
         </p>
