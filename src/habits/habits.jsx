@@ -29,7 +29,7 @@ export function Habits(props) {
     setNewHabitName("");
   }
 
-  function completeHabit(index) {
+  async function completeHabit(index) {
     const habitToComplete = habits[index];
     const updatedHabits = habits.filter((_, i) => i !== index);
 
@@ -41,11 +41,28 @@ export function Habits(props) {
 
     const updatedCompleted = [...completedHabits, newCompletion];
 
+    // Update local state
     setHabits(updatedHabits);
     setCompletedHabits(updatedCompleted);
 
+    // locally
     localStorage.setItem("habits", JSON.stringify(updatedHabits));
     localStorage.setItem("completed", JSON.stringify(updatedCompleted));
+
+    // Send completion to backend to track streaks
+    try {
+      await fetch("/api/streak", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userName: props.userName,
+          habit: habitToComplete.name,
+          date: new Date().toISOString(),
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to save streak:", err);
+    }
   }
 
   return (
