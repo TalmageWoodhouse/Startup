@@ -9,30 +9,17 @@ export function Habits(props) {
   const [selectedDay, setSelectedDay] = React.useState(["Wed"]);
   const [newHabitName, setNewHabitName] = React.useState("");
 
-  // Load habits and streaks from backend on mount
   React.useEffect(() => {
-    async function loadData() {
-      try {
-        // Fetch saved habits and streak data from backend
-        const res = await fetch("/api/streak");
-        if (res.ok) {
-          const data = await res.json();
-          setHabits(data.habits || []); // Expect [{ name: 'Workout', streak: 3 }, ...]
-        }
+    const habitsData = localStorage.getItem("habits");
+    const friendsData = localStorage.getItem("friends");
+    const completedData = localStorage.getItem("completed");
 
-        // Fallback to local data if backend unavailable
-        const friendsData = localStorage.getItem("friends");
-        const completedData = localStorage.getItem("completed");
-        if (friendsData) setFriends(JSON.parse(friendsData));
-        if (completedData) setCompletedHabits(JSON.parse(completedData));
-      } catch (err) {
-        console.error("Failed to load habits:", err);
-      }
-    }
-    loadData();
+    if (friendsData) setFriends(JSON.parse(friendsData));
+    if (habitsData) setHabits(JSON.parse(habitsData));
+    if (completedData) setCompletedHabits(JSON.parse(completedData));
   }, []);
 
-  const days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+  // const days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
 
   function addHabit() {
     if (!newHabitName.trim()) return;
@@ -42,7 +29,7 @@ export function Habits(props) {
     setNewHabitName("");
   }
 
-  async function completeHabit(index) {
+  function completeHabit(index) {
     const habitToComplete = habits[index];
     const updatedHabits = habits.filter((_, i) => i !== index);
 
@@ -54,28 +41,11 @@ export function Habits(props) {
 
     const updatedCompleted = [...completedHabits, newCompletion];
 
-    // Update local state
     setHabits(updatedHabits);
     setCompletedHabits(updatedCompleted);
 
-    // locally
     localStorage.setItem("habits", JSON.stringify(updatedHabits));
     localStorage.setItem("completed", JSON.stringify(updatedCompleted));
-
-    // Send completion to backend to track streaks
-    try {
-      await fetch("/api/streak", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userName: props.userName,
-          habit: habitToComplete.name,
-          date: new Date().toISOString(),
-        }),
-      });
-    } catch (err) {
-      console.error("Failed to save streak:", err);
-    }
   }
 
   return (
@@ -85,7 +55,7 @@ export function Habits(props) {
         {new Date().toDateString().replace(/ (\d{4})$/, ", $1")}
       </p>
 
-      {/* Day Selector */}
+      {/* Day Selector
       <div className="row g-2 mb-4 text-center">
         {days.map((day) => (
           <div className="col" key={day}>
@@ -99,7 +69,7 @@ export function Habits(props) {
             </button>
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* Habits Section */}
       <h4 className="mb-3">Habit Tiles</h4>
