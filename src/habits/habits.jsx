@@ -11,35 +11,20 @@ export function Habits(props) {
   const [streak, setStreak] = React.useState(0);
 
   React.useEffect(() => {
-    // const habitsData = localStorage.getItem("habits");
-    // const friendsData = localStorage.getItem("friends");
-    // const completedData = localStorage.getItem("completed");
+    const habitsData = localStorage.getItem("habits");
+    const friendsData = localStorage.getItem("friends");
+    const completedData = localStorage.getItem("completed");
 
-    // if (friendsData) setFriends(JSON.parse(friendsData));
-    // if (habitsData) setHabits(JSON.parse(habitsData));
-    // if (completedData) setCompletedHabits(JSON.parse(completedData));
+    if (friendsData) setFriends(JSON.parse(friendsData));
+    if (habitsData) setHabits(JSON.parse(habitsData));
+    if (completedData) setCompletedHabits(JSON.parse(completedData));
 
     async function loadData() {
       try {
-        const [streakRes, habitsRes, friendsRes] = await Promise.all([
-          fetch("/api/streak"),
-          fetch("/api/habits"),
-          fetch("/api/friends"),
-        ]);
-
+        const [streakRes] = await Promise.all([fetch("/api/streak")]);
         if (streakRes.ok) {
           const { streak } = await streakRes.json();
           setStreak(streak || 0);
-        }
-
-        if (habitsRes.ok) {
-          const data = await habitsRes.json();
-          setHabits(data.habits || []);
-        }
-
-        if (friendsRes.ok) {
-          const data = await friendsRes.json();
-          setFriends(data.friends || []);
         }
       } catch (err) {
         console.error("Error loading data:", err);
