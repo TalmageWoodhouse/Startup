@@ -7,19 +7,29 @@ export function About() {
   const [anime, setAnime] = React.useState("");
 
   React.useEffect(() => {
-    // Fetch anime quote
-    fetch("https://animechan.xyz/api/random")
-      .then((res) => res.json())
-      .then((data) => {
-        setQuote(data.quote);
-        setCharacter(data.character);
-        setAnime(data.anime);
-      })
-      .catch(() => {
-        setQuote("Even heroes need rest sometimes.");
-        setCharacter("Unknown");
-        setAnime("Inspiration");
-      });
+    async function fetchQuote() {
+      try {
+        const res = await fetch("https://api.animechan.io/v1/quotes/random");
+        const json = await res.json();
+
+        if (json.message && json.message.includes("Too many requests")) {
+          throw new Error("Rate limit hit");
+        }
+
+        // Adjust for data structure (remove `.data` if not needed)
+        const q = json.data || json;
+        setQuote(q.content);
+        setCharacter(q.character?.name || q.character);
+        setAnime(q.anime?.name || q.anime);
+      } catch (err) {
+        console.error(err);
+        setQuote("You've summoned too much wisdom for now. Try again later!");
+        setCharacter("The API Gods");
+        setAnime("Rate Limit Saga");
+      }
+    }
+
+    fetchQuote();
   }, []);
 
   return (
@@ -41,7 +51,7 @@ export function About() {
       </p>
 
       <div className="quote-box bg-light fst-italic h5 p-3 rounded shadow">
-        <p className="quote mb-2">"{quote}" </p>
+        <p className="quote mb-2">"{quote}"</p>
         <p className="author text-muted">
           — {character}, <em>{anime}</em>
         </p>

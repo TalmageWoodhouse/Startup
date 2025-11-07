@@ -13,7 +13,7 @@ export function Unauthenticated(props) {
   }
 
   async function createUser() {
-    loginOrCreate(`/api/auth/login`);
+    loginOrCreate(`/api/auth/create`);
   }
 
   async function loginOrCreate(endpoint) {

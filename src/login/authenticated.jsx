@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import "./authenticated.css";
 
 export function Authenticated(props) {
-  const navigate = useNavigate("userName");
+  const navigate = useNavigate();
 
   function logout() {
     fetch(`/api/auth/logout`, {

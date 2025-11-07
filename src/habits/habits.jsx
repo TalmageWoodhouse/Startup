@@ -100,6 +100,9 @@ export function Habits(props) {
       <p className="text-center">
         {new Date().toDateString().replace(/ (\d{4})$/, ", $1")}
       </p>
+      <h5 className="text-center text-success">
+        🔥 Tasks completed today: {streak}
+      </h5>
 
       {/* Day Selector
       <div className="row g-2 mb-4 text-center">
