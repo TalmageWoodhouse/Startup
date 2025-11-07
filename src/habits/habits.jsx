@@ -73,6 +73,15 @@ export function Habits(props) {
       if (res.ok) {
         const { streak: newStreak } = await res.json();
         setStreak(newStreak);
+        await fetch("/api/score", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: props.userName,
+            date: new Date().toLocaleDateString(),
+            count: 1,
+          }),
+        });
       }
     } catch (err) {
       console.error("Error updating streak:", err);

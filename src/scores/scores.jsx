@@ -9,6 +9,19 @@ export function Scores() {
     if (completedText) {
       setCompleted(JSON.parse(completedText));
     }
+
+    async function loadScores() {
+      try {
+        const res = await fetch("/api/scores");
+        if (res.ok) {
+          const data = await res.json();
+          setCompleted(data);
+        }
+      } catch (err) {
+        console.error("Error loading scores:", err);
+      }
+    }
+    loadScores();
   }, []);
 
   // Get today's date in the same format as stored

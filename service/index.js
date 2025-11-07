@@ -11,7 +11,7 @@ let users = [];
 let scores = [];
 
 // service port
-const port = process.argv.length > 2 ? process.argv[2] : 5173;
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 // JSON parsing
 app.use(express.json());
