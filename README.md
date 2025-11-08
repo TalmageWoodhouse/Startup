@@ -113,12 +113,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - I set up a Node.js Express server that handles user authentication and task tracking, including routes for login, registration, and scores.
+- [x] **Static middleware for frontend** - I configured Express to serve my React frontend, allowing the app to load directly from the same server instead of relying only on the Vite dev server.
+- [x] **Calls to third party endpoints** - I integrated a third-party API (AnimeChan) to fetch and display random anime quotes and images in my app.
+- [x] **Backend service endpoints** - I implemented API endpoints for user authentication, task completion tracking, and retrieving score data from memory
+- [x] **Frontend calls service endpoints** - My React frontend makes fetch calls to the backend endpoints for login, registration, logging completions, and displaying
+- [x] **Supports registration, login, logout, and restricted endpoint** - Allows users to register, log in with encrypted passwords, stay authenticated via cookies, log out, and access restricted data like scores only when logged in.
 
 ## 🚀 DB deliverable
 
