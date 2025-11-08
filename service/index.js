@@ -8,7 +8,6 @@ const authCookieName = "token";
 
 // memory data structures
 let users = [];
-let scores = [];
 
 // service port
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -23,8 +22,6 @@ app.use(express.static("public"));
 // router path for endpoints
 let apiRouter = express.Router();
 app.use(`/api`, apiRouter);
-
-/*Service Endpoints*/
 
 // CreateAuth a new user
 apiRouter.post("/auth/create", async (req, res) => {
@@ -72,17 +69,6 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
-// GetScores
-apiRouter.get("/scores", verifyAuth, (_req, res) => {
-  res.send(scores);
-});
-
-// SubmitScore
-apiRouter.post("/score", verifyAuth, (req, res) => {
-  scores = updateScores(req.body);
-  res.send(scores);
-});
-
 // Default error handler
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });
@@ -92,28 +78,6 @@ app.use(function (err, req, res, next) {
 app.use((_req, res) => {
   res.sendFile("index.html", { root: "public" });
 });
-
-// updateScores considers a new score for inclusion in the high scores.
-function updateScores(newScore) {
-  let found = false;
-  for (const [i, prevScore] of scores.entries()) {
-    if (newScore.score > prevScore.score) {
-      scores.splice(i, 0, newScore);
-      found = true;
-      break;
-    }
-  }
-
-  if (!found) {
-    scores.push(newScore);
-  }
-
-  if (scores.length > 10) {
-    scores.length = 10;
-  }
-
-  return scores;
-}
 
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10);
@@ -133,6 +97,50 @@ async function findUser(field, value) {
 
   return users.find((u) => u[field] === value);
 }
+
+// ---------------- HABITS ENDPOINTS ----------------
+
+// Store habits and completed habits in memory
+let habits = [];
+let completedHabits = [];
+let streak = 0;
+
+// Get all habits
+apiRouter.get("/habits", verifyAuth, (_req, res) => {
+  res.send(habits);
+});
+
+// Add a new habit
+apiRouter.post("/habits", verifyAuth, (req, res) => {
+  const habit = {
+    id: uuid.v4(),
+    name: req.body.name,
+    completed: false,
+  };
+  habits.push(habit);
+  res.send(habits);
+});
+
+// Mark a habit as completed
+apiRouter.post("/habits/complete", verifyAuth, (req, res) => {
+  const { habit } = req.body;
+  if (!habit) {
+    return res.status(400).send({ msg: "Missing habit name" });
+  }
+  completedHabits.push({
+    habit,
+    date: new Date().toLocaleDateString(),
+  });
+  streak += 1; // Increment streak count
+  res.send({ streak });
+});
+
+// Get current streak
+apiRouter.get("/scores", verifyAuth, (_req, res) => {
+  console.log("get current streak called");
+  console.log(streak);
+  res.send({ streak });
+});
 
 // setAuthCookie in the HTTP response
 function setAuthCookie(res, authToken) {
