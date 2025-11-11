@@ -87,5 +87,4 @@ module.exports = {
   addHabit,
   addCompletedHabit,
   updateOrGetStreak,
-  getStreak,
 };
