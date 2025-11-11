@@ -43,11 +43,6 @@ async function updateUser(user) {
 
 // ------ HABIT FUNCTIONS ------
 
-// get all habits for a specific user
-async function getHabits(userEmail) {
-  return habitsCollection.find({ userEmail }).toArray();
-}
-
 // add a new habit
 async function addHabit(habit) {
   await habitsCollection.insertOne(habit);
