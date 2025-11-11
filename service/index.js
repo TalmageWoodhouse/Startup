@@ -98,6 +98,11 @@ async function findUser(field, value) {
   return DB.getUser(value);
 }
 
+async function getUserFromCookie(req) {
+  const token = req.cookies[authcookieName];
+  return await findUser("token", token);
+}
+
 // ---------------- HABITS ENDPOINTS ----------------
 
 // Get all habits for the logged-in user
