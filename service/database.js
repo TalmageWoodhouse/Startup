@@ -74,17 +74,3 @@ async function updateOrGetStreak(userEmail) {
 
   return count;
 }
-
-module.exports = {
-  // users
-  getUser,
-  getUserByToken,
-  addUser,
-  updateUser,
-
-  //habits
-  getHabits,
-  addHabit,
-  addCompletedHabit,
-  updateOrGetStreak,
-};
