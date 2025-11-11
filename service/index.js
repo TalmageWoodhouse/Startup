@@ -98,8 +98,9 @@ async function findUser(field, value) {
   return DB.getUser(value);
 }
 
+// helper function to
 async function getUserFromCookie(req) {
-  const token = req.cookies[authcookieName];
+  const token = req.cookies[authCookieName];
   return await findUser("token", token);
 }
 
