@@ -24,12 +24,14 @@ export function Habits(props) {
         if (habitsRes.ok) {
           const data = await habitsRes.json();
           setHabits(data || []);
-          console.log(data);
         }
 
-        // Load completed from localStorage
-        const completedData = localStorage.getItem("completed");
-        if (completedData) setCompletedHabits(JSON.parse(completedData));
+        // Load completed from backend
+        const completedRes = await fetch("/api/habits/completed");
+        if (completedRes.ok) {
+          const completedData = await completedRes.json();
+          setCompletedHabits(Array.isArray(completedData) ? completedData : []);
+        }
       } catch (err) {
         console.error("Error loading data:", err);
       }
@@ -54,7 +56,9 @@ export function Habits(props) {
       });
       if (res.ok) {
         const updated = await res.json();
-        setHabits(updated);
+        const newHabitsArray = habits.slice();
+        newHabitsArray.push(updated);
+        setHabits(newHabitsArray);
         setNewHabitName("");
       }
     } catch (err) {
@@ -73,9 +77,6 @@ export function Habits(props) {
     };
 
     setCompletedHabits((oldArray) => [...oldArray, newCompletion]);
-    console.log(completedHabits);
-
-    const storageHabits = localStorage.getItem("habits");
 
     // Increment streak on backend
     try {

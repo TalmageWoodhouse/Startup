@@ -135,6 +135,22 @@ apiRouter.post("/habits", verifyAuth, async (req, res) => {
   res.send(habit);
 });
 
+// get all completed habits
+app.get("/api/habits/completed", async (req, res) => {
+  try {
+    const user = await DB.getUserByToken(req.cookies.token);
+    if (!user) {
+      return res.status(401).json({ msg: "Unauthorized" });
+    }
+
+    const completed = await DB.getCompletedHabits(user.email);
+    res.json(completed);
+  } catch (err) {
+    console.error("Error loading completed habits:", err);
+    res.status(500).json({ msg: "Error loading completed habits" });
+  }
+});
+
 // Mark a habit as completed
 apiRouter.post("/habits/complete", verifyAuth, async (req, res) => {
   const user = await getUserFromCookie(req);
@@ -142,6 +158,14 @@ apiRouter.post("/habits/complete", verifyAuth, async (req, res) => {
 
   if (!req.body.habit)
     return res.status(400).send({ msg: "Missing habit name" });
+
+  try {
+    const completed = await DB.getCompletedHabits(user.email);
+    res.json(completed);
+  } catch (err) {
+    console.error("Error loading completed habits:", err);
+    res.status(500).json({ msg: "Error loading completed habits" });
+  }
 
   const completion = {
     userEmail: user.email,

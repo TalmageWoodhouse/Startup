@@ -53,6 +53,10 @@ async function addHabit(habit) {
   await habitsCollection.insertOne(habit);
 }
 
+async function getCompletedHabits(userEmail) {
+  return completedCollection.find({ userEmail }).toArray();
+}
+
 // mark a habit as completed
 async function addCompletedHabit(completion) {
   await completedCollection.insertOne(completion);
@@ -85,6 +89,7 @@ module.exports = {
   //habits
   getHabits,
   addHabit,
+  getCompletedHabits,
   addCompletedHabit,
   updateOrGetStreak,
 };
