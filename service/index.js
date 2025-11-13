@@ -21,6 +21,8 @@ app.use(express.static("public"));
 let apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
+// -------- AUTH ---------------------
+
 // CreateAuth a new user
 apiRouter.post("/auth/create", async (req, res) => {
   if (await findUser("email", req.body.email)) {
@@ -78,6 +80,8 @@ app.use(function (err, req, res, next) {
 app.use((_req, res) => {
   res.sendFile("index.html", { root: "public" });
 });
+
+// ---------------- User Helpers -------------------
 
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10);
@@ -176,31 +180,21 @@ apiRouter.post("/habits/complete", verifyAuth, async (req, res) => {
   }
 });
 
-// load streak from data base
-apiRouter.post("/scores", verifyAuth, async (req, res) => {
+// Get current streak for the logged-in user
+apiRouter.get("/scores", verifyAuth, async (req, res) => {
   try {
     const user = await getUserFromCookie(req);
     if (!user) return res.status(401).send({ msg: "Unauthorized" });
 
-    await DB.updateStreak(user).res.status(200);
-    localStorage.push(user.streak);
+    const streak = await DB.getStreak(user.email);
+    res.status(200).json({ streak });
   } catch (err) {
-    console.error("Error updating streak");
+    console.error("Error fetching streak:", err);
     res.status(500).json({ msg: "Internal server error." });
   }
-
-  //   // Count completions from today only
-  //   const today = new Date().toISOString().slice(0, 10); // e.g. "2025-11-10"
-  //   const todaysCount = completions.filter((c) =>
-  //     c.date.startsWith(today)
-  //   ).length;
-
-  //   res.send({ streak: todaysCount });
-  // } catch (err) {
-  //   console.error("Error calculating today's streak:", err);
-  //   res.status(500).send({ msg: "Error calculating streak" });
-  // }
 });
+
+// ------------- COOKIE SETUP -------------------
 
 // setAuthCookie in the HTTP response
 function setAuthCookie(res, authToken) {

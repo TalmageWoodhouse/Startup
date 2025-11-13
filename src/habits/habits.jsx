@@ -12,25 +12,25 @@ export function Habits(props) {
   React.useEffect(() => {
     async function loadData() {
       try {
-        // Load streak
-        // const streakRes = await fetch("/api/scores");
-        // if (streakRes.ok) {
-        //   const { streak } = await streakRes.json();
-        //   setStreak(streak || 0);
-        // }
-
-        // Load habits
+        // Load all habits
         const habitsRes = await fetch("/api/habits");
         if (habitsRes.ok) {
           const data = await habitsRes.json();
           setHabits(data || []);
         }
 
-        // Load completed from backend
+        // Load completed habits
         const completedRes = await fetch("/api/habits/completed");
         if (completedRes.ok) {
           const completedData = await completedRes.json();
           setCompletedHabits(Array.isArray(completedData) ? completedData : []);
+        }
+
+        // Load current streak
+        const streakRes = await fetch("/api/scores");
+        if (streakRes.ok) {
+          const { streak } = await streakRes.json();
+          setStreak(streak || 0);
         }
       } catch (err) {
         console.error("Error loading data:", err);
@@ -46,6 +46,7 @@ export function Habits(props) {
 
   async function addHabit() {
     if (!newHabitName.trim()) return;
+
     const newHabit = { name: newHabitName };
 
     try {
@@ -54,11 +55,10 @@ export function Habits(props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newHabit),
       });
+
       if (res.ok) {
         const updated = await res.json();
-        const newHabitsArray = habits.slice();
-        newHabitsArray.push(updated);
-        setHabits(newHabitsArray);
+        setHabits((prev) => [...prev, updated]);
         setNewHabitName("");
       }
     } catch (err) {
@@ -79,7 +79,11 @@ export function Habits(props) {
 
       if (res.ok) {
         const data = await res.json();
-        setStreak(data.streak);
+
+        // Update streak from backend response
+        if (data.streak !== undefined) {
+          setStreak(data.streak);
+        }
       }
     } catch (err) {
       console.error("Error completing habit:", err);
@@ -92,6 +96,11 @@ export function Habits(props) {
       <p className="text-center">
         {new Date().toDateString().replace(/ (\d{4})$/, ", $1")}
       </p>
+
+      <div className="text-center mb-4">
+        <h5>Your Current Streak 🔥</h5>
+        <h2 className="text-success">{streak}</h2>
+      </div>
 
       {/* Habits Section */}
       <h4 className="mb-3">Your Tasks</h4>
@@ -115,7 +124,7 @@ export function Habits(props) {
         )}
       </div>
 
-      {/* New Habit input */}
+      {/* Add Habit Section */}
       <input
         type="text"
         className="form-control mb-2"
@@ -123,8 +132,6 @@ export function Habits(props) {
         onChange={(e) => setNewHabitName(e.target.value)}
         placeholder="Enter new habit"
       />
-
-      {/* Add Habit Button */}
       <div className="mt-4 text-center">
         <button className="btn btn-primary" onClick={addHabit}>
           Add New Habit
@@ -132,7 +139,7 @@ export function Habits(props) {
       </div>
 
       {/* Completed Section */}
-      <h4 className="mb-3">Completed</h4>
+      <h4 className="mb-3 mt-5">Completed</h4>
       <div className="row g-3 mb-4">
         {completedHabits.length > 0 ? (
           completedHabits.map((habit, index) => (
@@ -154,35 +161,3 @@ export function Habits(props) {
     </main>
   );
 }
-
-// async function completeHabit(index) {
-//   const habitToComplete = activeHabits.find((_, i) => i == index);
-//   if (!habitToComplete) return;
-
-//   const newCompletion = {
-//     name: props.userName || "Unknown",
-//     habit: habitToComplete.name,
-//     date: new Date().toISOString(),
-//   };
-
-//   setCompletedHabits((oldArray) => [...oldArray, newCompletion]);
-
-//   // Increment streak in local storage
-//   const currentStreak = Number(localStorage.getItem(streak) || 0);
-//   const updatedStreak = currentStreak + 1;
-//   localStorage.setItem("streak", updatedStreak);
-
-//   // try {
-//   //   const res = await fetch("/api/habits/complete", {
-//   //     method: "POST",
-//   //     headers: { "Content-Type": "application/json" },
-//   //     body: JSON.stringify({ habit: habitToComplete.name }),
-//   //   });
-//   //   if (res.ok) {
-//   //     const data = await res.json();
-//   //     setStreak(data.streak);
-//   //   }
-//   // } catch (err) {
-//   //   console.error("Error updating streak:", err);
-//   // }
-// }

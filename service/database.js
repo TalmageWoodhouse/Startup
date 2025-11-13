@@ -6,7 +6,6 @@ const client = new MongoClient(url);
 const db = client.db("habits");
 
 const userCollection = db.collection("user");
-const streakCollection = db.collection("streak");
 const habitsCollection = db.collection("habits");
 const completedCollection = db.collection("completed");
 
@@ -41,11 +40,15 @@ async function updateUser(user) {
   await userCollection.updateOne({ email: user.email }, { $set: user });
 }
 
-async function updateStreak(user) {
-  await userCollection.updateOne(
-    { email: user.email },
-    { $set: { streak: user.streak } }
-  );
+// Update a user's streak value in the DB
+async function updateStreak(email, streak) {
+  await userCollection.updateOne({ email }, { $set: { streak } });
+}
+
+// Get a user's streak from the DB
+async function getStreak(email) {
+  const user = await userCollection.findOne({ email });
+  return user ? user.streak || 0 : 0;
 }
 
 // ------ HABIT FUNCTIONS ------
@@ -55,7 +58,6 @@ async function getHabits(userEmail) {
   return habitsCollection.find({ userEmail }).toArray();
 }
 
-// add a new habit
 async function addHabit(habit) {
   await habitsCollection.insertOne(habit);
 }
@@ -64,7 +66,6 @@ async function getCompletedHabits(userEmail) {
   return completedCollection.find({ userEmail }).toArray();
 }
 
-// mark a habit as completed
 async function addCompletedHabit(completion) {
   await completedCollection.insertOne(completion);
 }
@@ -72,7 +73,7 @@ async function addCompletedHabit(completion) {
 // update or get current streak for a given habit
 async function updateOrGetStreak(userEmail) {
   const today = new Date();
-  today.setHours(0, 0, 0, 0); // normalize to start of day
+  today.setHours(0, 0, 0, 0);
 
   // Count completed habits for this user today
   const count = await completedCollection.countDocuments({
@@ -83,6 +84,8 @@ async function updateOrGetStreak(userEmail) {
     },
   });
 
+  // save updated streak in user document
+  await updateStreak(userEmail, count);
   return count;
 }
 
@@ -92,6 +95,8 @@ module.exports = {
   getUserByToken,
   addUser,
   updateUser,
+  updateStreak,
+  getStreak,
 
   //habits
   getHabits,
