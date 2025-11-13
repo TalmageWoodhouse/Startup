@@ -13,11 +13,11 @@ export function Habits(props) {
     async function loadData() {
       try {
         // Load streak
-        const streakRes = await fetch("/api/scores");
-        if (streakRes.ok) {
-          const { streak } = await streakRes.json();
-          setStreak(streak || 0);
-        }
+        // const streakRes = await fetch("/api/scores");
+        // if (streakRes.ok) {
+        //   const { streak } = await streakRes.json();
+        //   setStreak(streak || 0);
+        // }
 
         // Load habits
         const habitsRes = await fetch("/api/habits");
@@ -66,27 +66,23 @@ export function Habits(props) {
     }
   }
 
-  async function completeHabit(index) {
-    const habitToComplete = activeHabits.find((_, i) => i == index);
-    if (!habitToComplete) return;
-
-    const newCompletion = {
-      name: props.userName || "Unknown",
-      habit: habitToComplete.name,
-      date: new Date().toLocaleDateString(),
-    };
-
-    setCompletedHabits((oldArray) => [...oldArray, newCompletion]);
-
-    // Increment streak on backend
+  async function completeHabit(habitName) {
     try {
+      // Optimistic UI update
+      setCompletedHabits((prev) => [...prev, { habit: habitName }]);
+
       const res = await fetch("/api/habits/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ habit: habitToComplete.name }),
+        body: JSON.stringify({ habit: habitName }),
       });
+
+      if (res.ok) {
+        const data = await res.json();
+        setStreak(data.streak);
+      }
     } catch (err) {
-      console.error("Error updating streak:", err);
+      console.error("Error completing habit:", err);
     }
   }
 
@@ -98,7 +94,7 @@ export function Habits(props) {
       </p>
 
       {/* Habits Section */}
-      <h4 className="mb-3">Habit Tiles</h4>
+      <h4 className="mb-3">Your Tasks</h4>
       <div className="row g-3 mb-4">
         {activeHabits.length > 0 ? (
           activeHabits.map((habit, index) => (
@@ -107,7 +103,7 @@ export function Habits(props) {
                 <p>{habit.name}</p>
                 <button
                   className="btn btn-secondary mt-2"
-                  onClick={() => completeHabit(index)}
+                  onClick={() => completeHabit(habit.name)}
                 >
                   Complete
                 </button>
@@ -158,3 +154,35 @@ export function Habits(props) {
     </main>
   );
 }
+
+// async function completeHabit(index) {
+//   const habitToComplete = activeHabits.find((_, i) => i == index);
+//   if (!habitToComplete) return;
+
+//   const newCompletion = {
+//     name: props.userName || "Unknown",
+//     habit: habitToComplete.name,
+//     date: new Date().toISOString(),
+//   };
+
+//   setCompletedHabits((oldArray) => [...oldArray, newCompletion]);
+
+//   // Increment streak in local storage
+//   const currentStreak = Number(localStorage.getItem(streak) || 0);
+//   const updatedStreak = currentStreak + 1;
+//   localStorage.setItem("streak", updatedStreak);
+
+//   // try {
+//   //   const res = await fetch("/api/habits/complete", {
+//   //     method: "POST",
+//   //     headers: { "Content-Type": "application/json" },
+//   //     body: JSON.stringify({ habit: habitToComplete.name }),
+//   //   });
+//   //   if (res.ok) {
+//   //     const data = await res.json();
+//   //     setStreak(data.streak);
+//   //   }
+//   // } catch (err) {
+//   //   console.error("Error updating streak:", err);
+//   // }
+// }

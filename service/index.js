@@ -85,7 +85,9 @@ async function createUser(email, password) {
     email: email,
     password: passwordHash,
     token: uuid.v4(),
+    streak: 0,
   };
+  localStorage.push(streak);
   await DB.addUser(user);
   return user;
 }
@@ -135,14 +137,12 @@ apiRouter.post("/habits", verifyAuth, async (req, res) => {
   res.send(habit);
 });
 
-// get all completed habits
-app.get("/api/habits/completed", async (req, res) => {
-  try {
-    const user = await DB.getUserByToken(req.cookies.token);
-    if (!user) {
-      return res.status(401).json({ msg: "Unauthorized" });
-    }
+// Get all completed habits
+apiRouter.get("/habits/completed", verifyAuth, async (req, res) => {
+  const user = await getUserFromCookie(req);
+  if (!user) return res.status(401).send({ msg: "Unauthorized" });
 
+  try {
     const completed = await DB.getCompletedHabits(user.email);
     res.json(completed);
   } catch (err) {
@@ -160,28 +160,46 @@ apiRouter.post("/habits/complete", verifyAuth, async (req, res) => {
     return res.status(400).send({ msg: "Missing habit name" });
 
   try {
-    const completed = await DB.getCompletedHabits(user.email);
-    res.json(completed);
+    const completion = {
+      userEmail: user.email,
+      habit: req.body.habit,
+      date: new Date().toISOString(),
+    };
+
+    await DB.addCompletedHabit(completion);
+
+    const streak = await DB.updateOrGetStreak(user.email);
+    res.send({ streak });
   } catch (err) {
-    console.error("Error loading completed habits:", err);
-    res.status(500).json({ msg: "Error loading completed habits" });
+    console.error("Error completing habit:", err);
+    res.status(500).json({ msg: "Error completing habit" });
   }
-
-  const completion = {
-    userEmail: user.email,
-    habit: req.body.habit,
-    date: new Date().toISOString(),
-  };
-
-  await DB.addCompletedHabit(completion);
-  const streak = await DB.updateOrGetStreak(user.email);
-  res.send({ streak });
 });
 
-// Get current streak
-apiRouter.get("/scores", verifyAuth, async (_req, res) => {
-  const streak = await DB.updateOrGetStreak();
-  res.send({ streak });
+// load streak from data base
+apiRouter.post("/scores", verifyAuth, async (req, res) => {
+  try {
+    const user = await getUserFromCookie(req);
+    if (!user) return res.status(401).send({ msg: "Unauthorized" });
+
+    await DB.updateStreak(user).res.status(200);
+    localStorage.push(user.streak);
+  } catch (err) {
+    console.error("Error updating streak");
+    res.status(500).json({ msg: "Internal server error." });
+  }
+
+  //   // Count completions from today only
+  //   const today = new Date().toISOString().slice(0, 10); // e.g. "2025-11-10"
+  //   const todaysCount = completions.filter((c) =>
+  //     c.date.startsWith(today)
+  //   ).length;
+
+  //   res.send({ streak: todaysCount });
+  // } catch (err) {
+  //   console.error("Error calculating today's streak:", err);
+  //   res.status(500).send({ msg: "Error calculating streak" });
+  // }
 });
 
 // setAuthCookie in the HTTP response

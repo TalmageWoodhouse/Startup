@@ -86,6 +86,7 @@ export function Scores() {
         console.error("Error loading streak:", err);
       }
     }
+
     loadScores();
   }, []);
 
@@ -93,7 +94,7 @@ export function Scores() {
     <main className="container flex-grow-1 my-4 text-center">
       <h3 className="mb-3">Your Current Streak 🔥</h3>
       <h1 className="display-3 text-success">{streak}</h1>
-      <p>Number of habits completed in a today!</p>
+      <p>Habits completed today!</p>
     </main>
   );
 }

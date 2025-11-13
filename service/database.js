@@ -41,6 +41,13 @@ async function updateUser(user) {
   await userCollection.updateOne({ email: user.email }, { $set: user });
 }
 
+async function updateStreak(user) {
+  await userCollection.updateOne(
+    { email: user.email },
+    { $set: { streak: user.streak } }
+  );
+}
+
 // ------ HABIT FUNCTIONS ------
 
 // get all habits for a specific user
