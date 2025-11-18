@@ -17,21 +17,27 @@ class HabitNotifierClass {
   handlers = [];
 
   constructor() {
-    // Simulate friend habit updates every few seconds
-    const friendNames = ["John", "Lin", "Cal", "Eich", "Sara"];
-    const habits = ["Workout", "Meditate", "Read", "Run", "Drink Water"];
-
-    setInterval(() => {
-      const randomFriend =
-        friendNames[Math.floor(Math.random() * friendNames.length)];
-      const randomHabit = habits[Math.floor(Math.random() * habits.length)];
-
-      const isComplete = Math.random() > 0.5;
-      const type = isComplete ? HabitEvent.Complete : HabitEvent.Add;
-      const value = { habit: randomHabit };
-
-      this.broadcastEvent(randomFriend, type, value);
-    }, 5000);
+    let port = window.location.port;
+    const protocol = window.location.protocol === "http:" ? "ws" : "wss";
+    this.socket = new WebSocket(
+      `${protocol}://${window.location.hostname}:${port}/ws`
+    );
+    this.socket.onopen = (event) => {
+      this.receiveEvent(
+        new EventMessage("Simon", GameEvent.System, { msg: "connected" })
+      );
+    };
+    this.socket.onclose = (event) => {
+      this.receiveEvent(
+        new EventMessage("Simon", GameEvent.System, { msg: "disconnected" })
+      );
+    };
+    this.socket.onmessage = async (msg) => {
+      try {
+        const event = JSON.parse(await msg.data.text());
+        this.receiveEvent(event);
+      } catch {}
+    };
   }
 
   addHandler(handler) {
@@ -44,7 +50,7 @@ class HabitNotifierClass {
 
   broadcastEvent(from, type, value) {
     const event = new EventMessage(from, type, value);
-    this.receiveEvent(event);
+    this.socket.send(JSON.stringify(event));
   }
 
   receiveEvent(event) {

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { HabitEvent, HabitNotifier } from "./habitNotifier";
 
 export function Friends({ userName }) {
