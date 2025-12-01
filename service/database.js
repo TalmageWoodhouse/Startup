@@ -63,7 +63,21 @@ async function addHabit(habit) {
 }
 
 async function getCompletedHabits(userEmail) {
-  return completedCollection.find({ userEmail }).toArray();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  return completedCollection
+    .find({
+      userEmail,
+      date: {
+        $gte: today.toISOString(),
+        $lt: tomorrow.toISOString(),
+      },
+    })
+    .toArray();
 }
 
 async function addCompletedHabit(completion) {
