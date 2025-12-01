@@ -92,7 +92,7 @@ async function createUser(email, password) {
     token: uuid.v4(),
     streak: 0,
   };
-  localStorage.push(streak);
+
   await DB.addUser(user);
   return user;
 }
