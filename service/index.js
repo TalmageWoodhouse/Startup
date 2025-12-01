@@ -174,6 +174,25 @@ apiRouter.post("/habits/complete", verifyAuth, async (req, res) => {
     await DB.addCompletedHabit(completion);
 
     const streak = await DB.updateOrGetStreak(user.email);
+
+    // 1️⃣ Broadcast habit completion to all clients
+    req.app.get("ws").broadcast({
+      from: user.email,
+      type: "complete",
+      value: { habit: req.body.habit, streak },
+    });
+
+    // 2️⃣ Broadcast milestone streaks (5, 10, 15)
+    if ([5, 10, 15].includes(streak)) {
+      req.app.get("ws").broadcast({
+        from: user.email,
+        type: "system",
+        value: {
+          msg: `${user.email.split("@")[0]} hit a streak of ${streak}! 🎉`,
+        },
+      });
+    }
+
     res.send({ streak });
   } catch (err) {
     console.error("Error completing habit:", err);
@@ -211,4 +230,5 @@ const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-peerProxy(httpService);
+const wsServer = peerProxy(httpService);
+app.set("ws", wsServer); // store the websocket server in Express app
