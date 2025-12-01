@@ -139,6 +139,14 @@ apiRouter.post("/habits", verifyAuth, async (req, res) => {
   };
 
   await DB.addHabit(habit);
+
+  // Broadcast habit addition
+  req.app.get("ws").broadcast({
+    from: user.email,
+    type: "add",
+    value: { habit: req.body.name },
+  });
+
   res.send(habit);
 });
 
@@ -175,14 +183,14 @@ apiRouter.post("/habits/complete", verifyAuth, async (req, res) => {
 
     const streak = await DB.updateOrGetStreak(user.email);
 
-    // 1️⃣ Broadcast habit completion to all clients
+    // Broadcast habit completion to all clients
     req.app.get("ws").broadcast({
       from: user.email,
       type: "complete",
       value: { habit: req.body.habit, streak },
     });
 
-    // 2️⃣ Broadcast milestone streaks (5, 10, 15)
+    // Broadcast milestone streaks (5, 10, 15)
     if ([5, 10, 15].includes(streak)) {
       req.app.get("ws").broadcast({
         from: user.email,
