@@ -131,11 +131,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - The server is set up with peerProxy ans successfully accepts WebSocket connections from clients
+- [x] **Frontend makes WebSocket connection** - The client now successfullt connect to the Websocket server and can recieve events
+- [x] **Data sent over WebSocket connection** - Habit complettions and streak milestones are sent from the client to all other connected clients via broadcasts.
+- [x] **WebSocket data displayed** - The frontend component receives events from habitnotifier and displays them in the UI in real time.
+- [x] **Application is fully functional** - The Websocket feater is integrated end-to-end: server send updates, clients receive them, and the UI displays them.
 
 .body {
 display: flex;
