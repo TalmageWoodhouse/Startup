@@ -1,6 +1,7 @@
 import React from "react";
 import "./habits.css";
 import { Friends } from "./friends";
+import { HabitNotifier, HabitEvent } from "./habitNotifier";
 
 export function Habits(props) {
   const [habits, setHabits] = React.useState([]);
@@ -85,6 +86,13 @@ export function Habits(props) {
           setStreak(data.streak);
         }
       }
+      const eventData = { name: props.userName, habit: habitName };
+
+      HabitNotifier.broadcastEvent(
+        props.userName,
+        HabitEvent.Complete,
+        eventData
+      );
     } catch (err) {
       console.error("Error completing habit:", err);
     }

@@ -24,12 +24,12 @@ class HabitNotifierClass {
     );
     this.socket.onopen = (event) => {
       this.receiveEvent(
-        new EventMessage("System", GameEvent.System, { msg: "connected" })
+        new EventMessage("System", HabitEvent.System, { msg: "connected" })
       );
     };
     this.socket.onclose = (event) => {
       this.receiveEvent(
-        new EventMessage("System", GameEvent.System, { msg: "disconnected" })
+        new EventMessage("System", HabitEvent.System, { msg: "disconnected" })
       );
     };
     this.socket.onmessage = async (msg) => {
@@ -51,6 +51,7 @@ class HabitNotifierClass {
   broadcastEvent(from, type, value) {
     const event = new EventMessage(from, type, value);
     this.socket.send(JSON.stringify(event));
+    console.log(event);
   }
 
   receiveEvent(event) {
