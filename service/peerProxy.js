@@ -4,16 +4,6 @@ function peerProxy(httpServer) {
   // Create a websocket object
   const socketServer = new WebSocketServer({ server: httpServer });
 
-  // Add server-side broadcast method
-  socketServer.broadcast = function (event) {
-    const json = JSON.stringify(event);
-    socketServer.clients.forEach((client) => {
-      if (client.readyState === client.OPEN) {
-        client.send(json);
-      }
-    });
-  };
-
   socketServer.on("connection", (socket) => {
     socket.isAlive = true;
 
@@ -41,8 +31,6 @@ function peerProxy(httpServer) {
       client.ping();
     });
   }, 10000);
-
-  return socketServer;
 }
 
 module.exports = { peerProxy };
