@@ -9,7 +9,7 @@ const { peerProxy } = require("./peerProxy.js");
 const authCookieName = "token";
 
 // service port
-const port = process.argv.length > 2 ? process.argv[2] : 3000;
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 // JSON parsing
 app.use(express.json());

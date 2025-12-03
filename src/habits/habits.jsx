@@ -1,7 +1,7 @@
 import React from "react";
 import "./habits.css";
 import { Friends } from "./friends";
-import { HabitNotifier, HabitEvent } from "../../service/habitNotifier";
+import { HabitNotifier, HabitEvent } from "./habitNotifier";
 
 export function Habits(props) {
   const [habits, setHabits] = React.useState([]);

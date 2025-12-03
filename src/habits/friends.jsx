@@ -1,6 +1,6 @@
 import React from "react";
 
-import { HabitEvent, HabitNotifier } from "../../service/habitNotifier";
+import { HabitEvent, HabitNotifier } from "./habitNotifier";
 
 export function Friends({ userName }) {
   const [events, setEvents] = React.useState([]);
