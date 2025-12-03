@@ -62,6 +62,9 @@ export function Habits(props) {
         setHabits((prev) => [...prev, updated]);
         setNewHabitName("");
       }
+      const eventData = { name: props.userName, habit: newHabitName };
+
+      HabitNotifier.broadcastEvent(props.userName, HabitEvent.Add, eventData);
     } catch (err) {
       console.error("Error adding habit:", err);
     }
@@ -85,9 +88,23 @@ export function Habits(props) {
         if (data.streak !== undefined) {
           setStreak(data.streak);
         }
+
+        // Broadcast streak milestones
+        if (data.streak === 5 || data.streak === 10) {
+          const milestoneEvent = {
+            name: props.userName,
+            streak: data.streak,
+          };
+
+          HabitNotifier.broadcastEvent(
+            props.userName,
+            HabitEvent.StreakMilestone,
+            milestoneEvent
+          );
+        }
       }
       const eventData = { name: props.userName, habit: habitName };
-
+      // Broadcast habit completion
       HabitNotifier.broadcastEvent(
         props.userName,
         HabitEvent.Complete,
